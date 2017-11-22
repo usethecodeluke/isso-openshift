@@ -17,6 +17,7 @@ from isso import config as isso_config
 
 application = make_app(isso_config.load('production.cfg'))
 
+"""
 virtenv = os.environ['OPENSHIFT_PYTHON_DIR'] + '/virtenv/'
 virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
 try:
@@ -26,6 +27,7 @@ except IOError:
 
 ip = os.environ['OPENSHIFT_PYTHON_IP']
 port = int(os.environ['OPENSHIFT_PYTHON_PORT'])
+"""
 
 
 def number_of_workers():
@@ -50,7 +52,7 @@ class StandaloneApplication(gunicorn.app.base.BaseApplication):
 
 if __name__ == '__main__':
     options = {
-        'bind': '%s:%s' % (ip, port),
+        'bind': '%s:%s' % ('0.0.0.0', 8080),
         'workers': number_of_workers(),
     }
     StandaloneApplication(application, options).run()
